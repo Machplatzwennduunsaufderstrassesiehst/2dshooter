@@ -11,9 +11,10 @@ public class NewBehaviourScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        Vector3 mouse = Input.mousePosition;
-        Vector3 player = transform.position;  
-        transform.Rotate(0, 0, 4);
+        Vector3 mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+		Vector3 player = transform.position;
+		Vector3 difference = mouse - player;
+		transform.rotation = Quaternion.Euler (0, 0, (Mathf.Atan2 (difference.y, difference.x) * 180 / Mathf.PI) % 360);
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)){
             if (Input.GetKey(KeyCode.W)) { transform.position += Vector3.up * Time.deltaTime * speed; }
             if (Input.GetKey(KeyCode.A)) { transform.position += Vector3.left * Time.deltaTime * speed; }
